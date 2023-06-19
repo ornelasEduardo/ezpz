@@ -1,8 +1,8 @@
 import "./App.css";
-import RenderLayout from "./funfun/widgets/RenderLayout";
+import RenderLayout from "./quecool/widgets/RenderLayout";
 import { widgetMap } from "./widgetMap";
 import { config } from "./config";
-import StackLayout from "./funfun/components/StackLayout";
+import StackLayout from "./quecool/components/StackLayout";
 
 function App() {
   return (
