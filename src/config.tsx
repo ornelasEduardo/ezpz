@@ -19,13 +19,35 @@ export const config = {
           },
           subItems: [
             {
-              HEADER: {
+              ROW: {
                 id: generateId(),
-                type: "HEADER",
+                type: "ROW",
                 props: {
-                  children: "🐙 ezpz huh!",
-                  style: { textAlign: "left", marginBottom: "0px" },
+                  alignItems: "flex-end",
+                  justifyContent: "flex-start",
+                  gap: "16px",
                 },
+                subItems: [
+                  {
+                    HEADER: {
+                      id: generateId(),
+                      type: "HEADER",
+                      props: {
+                        children: "🐙 ezpz huh!",
+                        style: { textAlign: "left", marginBottom: "0px" },
+                      },
+                    },
+                  },
+                  {
+                    BADGE: {
+                      id: generateId(),
+                      type: "BADGE",
+                      props: {
+                        children: "My Badge",
+                      },
+                    },
+                  },
+                ],
               },
             },
             {

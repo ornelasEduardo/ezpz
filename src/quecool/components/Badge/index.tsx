@@ -1,9 +1,10 @@
 const Badge = ({ children }: any) => {
   const style = {
-    padding: "8px 12px",
-    outline: "1px solid #eee",
-    background: "#f9f9ff",
+    padding: "4px 6px",
+    outline: "1px solid #ccc",
+    background: "#eee",
     borderRadius: "8px",
+    fontSize: "14px",
   };
 
   return <div style={style}>{children}</div>;
