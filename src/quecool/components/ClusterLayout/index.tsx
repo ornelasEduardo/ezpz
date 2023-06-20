@@ -1,10 +1,12 @@
 import React from "react";
 
 type ClusterLayoutProps = {
-  children: React.JSX.Element;
+  children: React.ReactNode;
   alignItems?: string;
   justifyContent?: string;
-  gap: string;
+  gap?: string;
+  style?: object;
+  wrap?: "wrap" | "nowrap" | "wrap-reverse";
 };
 
 const ClusterLayout = ({
@@ -12,6 +14,8 @@ const ClusterLayout = ({
   alignItems,
   justifyContent,
   gap,
+  wrap = "nowrap",
+  style,
 }: ClusterLayoutProps) => {
   return (
     <div
@@ -20,6 +24,8 @@ const ClusterLayout = ({
         alignItems: alignItems || "center",
         justifyContent: justifyContent || "center",
         gap: gap || "0px",
+        flexWrap: wrap,
+        ...style,
       }}
     >
       {children}

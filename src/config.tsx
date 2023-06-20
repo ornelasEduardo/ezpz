@@ -1,6 +1,8 @@
+import { generateId } from "./quecool/functions";
+
 export const config = {
   ROW: {
-    id: Math.random(),
+    id: generateId(),
     type: "ROW",
     props: {
       justifyContent: "flex-start",
@@ -8,40 +10,66 @@ export const config = {
     subItems: [
       {
         COLUMN: {
-          id: Math.random(),
+          id: generateId(),
           type: "COLUMN",
           props: {
             alignItems: "stretch",
-            gap: "16px",
+            justifyContent: "flex-start",
+            gap: "12px",
           },
           subItems: [
             {
+              HEADER: {
+                id: generateId(),
+                type: "HEADER",
+                props: {
+                  children: "🐙 ezpz huh!",
+                  style: { textAlign: "left", marginBottom: "0px" },
+                },
+              },
+            },
+            {
+              TEXT: {
+                id: generateId(),
+                type: "TEXT",
+                props: {
+                  children: "🚧 Rendering from config 🚧",
+                  style: {
+                    textAlign: "left",
+                    fontWeight: "bold",
+                  },
+                },
+              },
+            },
+            {
               ROW: {
-                id: Math.random(),
+                id: generateId(),
                 type: "ROW",
                 props: {
                   gap: "16px",
+                  justifyContent: "space-between",
                 },
                 subItems: [
                   {
                     INPUT: {
-                      id: Math.random(),
+                      id: generateId(),
                       type: "INPUT",
                       props: {
                         placeholder: "Type some text",
+                        style: { flexGrow: 1 },
                       },
                     },
                   },
                   {
                     BUTTON: {
-                      id: Math.random(),
+                      id: generateId(),
                       type: "BUTTON",
                       props: {
                         children: "Log value",
-                        onClick: (e: any) =>
+                        onClick: ((e: any) =>
                           console.log(
                             e.target.parentNode.querySelector("input").value
-                          ),
+                          )).toString(),
                       },
                     },
                   },
@@ -50,7 +78,7 @@ export const config = {
             },
             {
               BUTTON: {
-                id: Math.random(),
+                id: generateId(),
                 type: "BUTTON",
                 props: {
                   children: "Column Button",
