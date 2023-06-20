@@ -35,6 +35,20 @@ function App() {
     }
   };
 
+  const handleKeydown = (event: any) => {
+    //turns tab keydown events to tab indents
+    if (event.key == "Tab") {
+      event.preventDefault();
+      const start = event.target.selectionStart;
+      const end = event.target.selectionEnd;
+      event.target.value =
+        event.target.value.substring(0, start) +
+        "\t" +
+        event.target.value.substring(end);
+      event.target.selectionStart = event.target.selectionEnd = start + 1;
+    }
+  };
+
   return (
     <>
       <ClusterLayout gap="10vw">
@@ -55,6 +69,7 @@ function App() {
           <div>
             <textarea
               onChange={handleEditableConfigChange}
+              onKeyDown={handleKeydown}
               value={JSON.stringify(editableConfig.layout, null, 2)}
               style={{
                 fontSize: "12px",
