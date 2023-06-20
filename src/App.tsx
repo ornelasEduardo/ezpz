@@ -43,7 +43,7 @@ function App() {
       const end = event.target.selectionEnd;
       event.target.value =
         event.target.value.substring(0, start) +
-        "\t" +
+        "    " +
         event.target.value.substring(end);
       event.target.selectionStart = event.target.selectionEnd = start + 1;
     }
