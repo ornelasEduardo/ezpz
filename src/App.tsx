@@ -1,57 +1,29 @@
-import "./App.css";
-import RenderLayout from "./quecool/widgets/RenderLayout";
+import "./index.css";
 import { widgetMap } from "./widgetMap";
 import { config } from "./config";
 import StackLayout from "./quecool/components/StackLayout";
 import ClusterLayout from "./quecool/components/ClusterLayout";
-import { ChangeEvent, useState } from "react";
 import Badge from "./quecool/components/Badge";
-import { generateId } from "./quecool/functions";
+import EzpzEditor from "./quecool/components/EzpzEditor";
+import Heading from "./quecool/components/Heading";
 
 function App() {
-  const [editableConfig, setEditableConfig] = useState({
-    id: generateId(),
-    layout: config,
-  });
-
-  const [layout, setLayout] = useState(config);
-
-  const handleEditableConfigChange = (e: ChangeEvent) => {
-    let parsedAsJson: any;
-
-    try {
-      const element = e.target as HTMLTextAreaElement;
-      const value = element.value;
-
-      parsedAsJson = JSON.parse(value);
-
-      setLayout(parsedAsJson);
-    } catch (e) {
-      console.warn(e);
-    } finally {
-      setEditableConfig(() => {
-        return { id: generateId(), layout: parsedAsJson };
-      });
-    }
-  };
-
-  const handleKeydown = (event: any) => {
-    //turns tab keydown events to tab indents
-    if (event.key == "Tab") {
-      event.preventDefault();
-      const start = event.target.selectionStart;
-      const end = event.target.selectionEnd;
-      event.target.value =
-        event.target.value.substring(0, start) +
-        "    " +
-        event.target.value.substring(end);
-      event.target.selectionStart = event.target.selectionEnd = start + 1;
-    }
-  };
-
   return (
     <>
-      <ClusterLayout gap="10vw">
+      <div style={{ paddingLeft: "24px", paddingRight: "24px" }}>
+        <ClusterLayout justifyContent="space-between">
+          <Heading level={2}>🐙 ezpz</Heading>
+          <a
+            href="https://github.com/ornelasEduardo/ezpz"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Github
+          </a>
+        </ClusterLayout>
+      </div>
+
+      <ClusterLayout gap="10vw" style={{ height: "80%" }}>
         <StackLayout alignItems="flex-start" gap="16px">
           <StackLayout alignItems="flex-start">
             <h4>Available widgets</h4>
@@ -66,37 +38,11 @@ function App() {
               ))}
             </ClusterLayout>
           </StackLayout>
-          <div>
-            <textarea
-              onChange={handleEditableConfigChange}
-              onKeyDown={handleKeydown}
-              value={JSON.stringify(editableConfig.layout, null, 2)}
-              style={{
-                fontSize: "12px",
-                padding: "16px",
-                textAlign: "left",
-                background: "#f9f9f9",
-                borderRadius: "8px",
-                height: "50vh",
-                width: "80ch",
-                overflowY: "scroll",
-                resize: "none",
-                fontFamily:
-                  "Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif",
-              }}
-            />
+
+          <div style={{ width: "50vw" }}>
+            <EzpzEditor initialValue={JSON.stringify(config, null, 2)} />
           </div>
         </StackLayout>
-
-        <div>
-          <StackLayout alignItems="flex-start">
-            <RenderLayout
-              key={editableConfig.id}
-              layout={layout}
-              widgetMap={widgetMap}
-            />
-          </StackLayout>
-        </div>
       </ClusterLayout>
     </>
   );

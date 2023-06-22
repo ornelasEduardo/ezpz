@@ -1,4 +1,4 @@
-const StackLayout = ({ children, alignItems, gap }: any) => {
+const StackLayout = ({ children, alignItems, gap, style }: any) => {
   return (
     <div
       style={{
@@ -7,6 +7,7 @@ const StackLayout = ({ children, alignItems, gap }: any) => {
         alignItems: alignItems || "center",
         justifyContent: "center",
         gap: gap || "0px",
+        ...style,
       }}
     >
       {children}

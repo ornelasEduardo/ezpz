@@ -29,11 +29,12 @@ export const config = {
                 },
                 subItems: [
                   {
-                    HEADER: {
+                    HEADING: {
                       id: generateId(),
-                      type: "HEADER",
+                      type: "HEADING",
                       props: {
-                        children: "🐙 ezpz huh!",
+                        level: 2,
+                        children: "🚧 Rendering from config 🚧",
                         style: { textAlign: "left", marginBottom: "0px" },
                       },
                     },
@@ -55,7 +56,7 @@ export const config = {
                 id: generateId(),
                 type: "TEXT",
                 props: {
-                  children: "🚧 Rendering from config 🚧",
+                  children: "Pretty cool huh?",
                   style: {
                     textAlign: "left",
                     fontWeight: "bold",

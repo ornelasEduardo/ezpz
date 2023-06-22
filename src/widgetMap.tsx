@@ -2,7 +2,7 @@ import Button from "./quecool/components/Button";
 import ClusterLayout from "./quecool/components/ClusterLayout";
 import StackLayout from "./quecool/components/StackLayout";
 import Input from "./quecool/components/Input";
-import Header from "./quecool/components/Header";
+import HEADING from "./quecool/components/Heading";
 import Text from "./quecool/components/Text";
 import Badge from "./quecool/components/Badge";
 
@@ -23,8 +23,8 @@ export const widgetMap = {
     component: Button,
   },
 
-  HEADER: {
-    component: Header,
+  HEADING: {
+    component: HEADING,
   },
 
   TEXT: {
