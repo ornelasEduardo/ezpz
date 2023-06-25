@@ -8,6 +8,23 @@ import EzpzEditor from "./quecool/components/EzpzEditor";
 import Heading from "./quecool/components/Heading";
 
 function App() {
+  const copySnippet = (
+    widgetType: string,
+    snippetGenerator: (props?: any) => object
+  ) => {
+    const snippet = snippetGenerator({});
+
+    const configSnippet = {
+      [widgetType]: {
+        ...snippet,
+      },
+    };
+
+    const snippetJsonString = JSON.stringify(configSnippet, null, 2) + ",";
+
+    navigator.clipboard.writeText(snippetJsonString);
+  };
+
   return (
     <>
       <div style={{ paddingLeft: "24px", paddingRight: "24px" }}>
@@ -34,7 +51,17 @@ function App() {
               style={{ maxWidth: "80ch" }}
             >
               {Object.keys(widgetMap).map((widgetType) => (
-                <Badge key={widgetType}>{widgetType}</Badge>
+                <Badge
+                  onClick={() =>
+                    copySnippet(
+                      widgetType,
+                      widgetMap[widgetType].snippetGenerator
+                    )
+                  }
+                  key={widgetType}
+                >
+                  {widgetType}
+                </Badge>
               ))}
             </ClusterLayout>
           </StackLayout>

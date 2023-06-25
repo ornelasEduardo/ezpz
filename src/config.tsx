@@ -1,4 +1,7 @@
-import { generateId } from "./quecool/functions";
+import { generateId, minifyFunctionToString } from "./quecool/functions";
+
+import { generateBadgeSnippet } from "./quecool/components/Badge/snippet";
+import { generateButtonSnippet } from "./quecool/components/Button/snippet";
 
 export const config = {
   ROW: {
@@ -40,13 +43,7 @@ export const config = {
                     },
                   },
                   {
-                    BADGE: {
-                      id: generateId(),
-                      type: "BADGE",
-                      props: {
-                        children: "My Badge",
-                      },
-                    },
+                    BADGE: generateBadgeSnippet({ children: "My badge" }),
                   },
                 ],
               },
@@ -84,31 +81,26 @@ export const config = {
                     },
                   },
                   {
-                    BUTTON: {
-                      id: generateId(),
-                      type: "BUTTON",
-                      props: {
-                        children: "Log value",
-                        onClick: ((e: any) =>
-                          console.log(
-                            e.target.parentNode.querySelector("input").value
-                          )).toString(),
-                      },
-                    },
+                    BUTTON: generateButtonSnippet({
+                      children: "Log value",
+                      onClick: minifyFunctionToString((event: any) => {
+                        const parent = event.target.parentNode;
+                        const inputElement = parent.querySelector("input");
+
+                        console.log(inputElement.value);
+                      }),
+                    }),
                   },
                 ],
               },
             },
             {
-              BUTTON: {
-                id: generateId(),
-                type: "BUTTON",
-                props: {
-                  children: "Column Button",
-                  onClick: () =>
-                    console.log("You just clicked the column button"),
-                },
-              },
+              BUTTON: generateButtonSnippet({
+                children: "Column Button",
+                onClick: minifyFunctionToString(() =>
+                  console.log("You just clicked the column button")
+                ),
+              }),
             },
           ],
         },

@@ -1,4 +1,4 @@
-const Badge = ({ children }: any) => {
+const Badge = ({ children, onClick }: any) => {
   const style = {
     padding: "4px 6px",
     outline: "1px solid #ccc",
@@ -7,7 +7,17 @@ const Badge = ({ children }: any) => {
     fontSize: "14px",
   };
 
-  return <div style={style}>{children}</div>;
+  const handleOnClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
+  return (
+    <div onClick={handleOnClick} style={style}>
+      {children}
+    </div>
+  );
 };
 
 export default Badge;

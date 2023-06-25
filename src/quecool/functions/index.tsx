@@ -9,3 +9,11 @@ export const toSentenceCase = (word: string) => {
 export const generateId = (): string => {
   return Math.random().toString(16).slice(2);
 };
+
+export const minifyFunctionToString = (func: any) => {
+  const funcString = func.toString();
+  const minifiedCode = funcString
+    .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "") // Remove comments
+    .replace(/\s+/g, " "); // Remove unnecessary whitespace
+  return minifiedCode;
+};

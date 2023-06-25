@@ -12,6 +12,8 @@ const Header = ({ children, level = 1, style }: any) => {
       return <h5 style={style}>{children}</h5>;
     case 6:
       return <h6 style={style}>{children}</h6>;
+    default:
+      return <h1 style={style}>{children}</h1>;
   }
 };
 

@@ -16,7 +16,9 @@ const Preview = () => {
 
     workingCode = JSON.parse(code);
     // eslint-disable-next-line no-empty
-  } catch {}
+  } catch (e) {
+    console.error(e);
+  }
 
   return <RenderLayout layout={workingCode} widgetMap={widgetMap} />;
 };
