@@ -3,15 +3,22 @@ import { widgetMap } from "./widgetMap";
 import { config } from "./config";
 import StackLayout from "./quecool/components/StackLayout";
 import ClusterLayout from "./quecool/components/ClusterLayout";
-import Badge from "./quecool/components/Badge";
+import Tag from "./quecool/components/Tag";
 import EzpzEditor from "./quecool/components/EzpzEditor";
 import Heading from "./quecool/components/Heading";
+import { toSentenceCase } from "./quecool/functions";
+import { useRef, useState } from "react";
+import Toast from "./quecool/components/Toast";
+import { ClipboardIcon } from "@heroicons/react/20/solid";
 
 function App() {
-  const copySnippet = (
+  const [showToast, setShowToast] = useState("");
+  const timeoutRef = useRef(0);
+
+  const generateSnippet = (
     widgetType: string,
     snippetGenerator: (props?: any) => object
-  ) => {
+  ): string => {
     const snippet = snippetGenerator({});
 
     const configSnippet = {
@@ -20,9 +27,19 @@ function App() {
       },
     };
 
-    const snippetJsonString = JSON.stringify(configSnippet, null, 2) + ",";
+    return JSON.stringify(configSnippet, null, 2) + ",";
+  };
 
-    navigator.clipboard.writeText(snippetJsonString);
+  const handleTagClick = (widgetType: string) => {
+    setShowToast(toSentenceCase(widgetType));
+
+    if (timeoutRef) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setShowToast("");
+    }, 2000);
   };
 
   return (
@@ -41,36 +58,43 @@ function App() {
       </div>
 
       <ClusterLayout gap="10vw" style={{ height: "80%" }}>
-        <StackLayout alignItems="flex-start" gap="16px">
-          <StackLayout alignItems="flex-start">
-            <h4>Available widgets</h4>
-            <ClusterLayout
-              justifyContent="flex-start"
-              gap="16px"
-              wrap="wrap"
-              style={{ maxWidth: "80ch" }}
-            >
-              {Object.keys(widgetMap).map((widgetType) => (
-                <Badge
-                  onClick={() =>
-                    copySnippet(
-                      widgetType,
-                      widgetMap[widgetType].snippetGenerator
-                    )
-                  }
-                  key={widgetType}
-                >
-                  {widgetType}
-                </Badge>
-              ))}
-            </ClusterLayout>
+        <ClusterLayout alignItems="flex-start" gap="16px">
+          <StackLayout
+            alignItems="flex-start"
+            justifyContent="flex-start"
+            gap="16px"
+            wrap="wrap"
+          >
+            {Object.keys(widgetMap).map((widgetType) => (
+              <Tag
+                copyable={generateSnippet(
+                  widgetType,
+                  widgetMap[widgetType].snippetGenerator
+                )}
+                onClick={() => handleTagClick(widgetType)}
+                key={widgetType}
+              >
+                {toSentenceCase(widgetType)}
+              </Tag>
+            ))}
           </StackLayout>
 
           <div style={{ width: "50vw" }}>
             <EzpzEditor initialValue={JSON.stringify(config, null, 2)} />
           </div>
-        </StackLayout>
+        </ClusterLayout>
       </ClusterLayout>
+
+      {showToast !== "" && (
+        <Toast
+          onCloseRequest={() => setShowToast("")}
+          prependIcon={
+            <ClipboardIcon height="20px" width="20px" fill="white" />
+          }
+        >
+          Successfully copied {showToast}
+        </Toast>
+      )}
     </>
   );
 }
